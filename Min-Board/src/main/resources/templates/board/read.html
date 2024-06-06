@@ -4,27 +4,6 @@
     <meta charset="UTF-8">
     <title>게시글 읽기</title>
     <link rel="stylesheet" href="/default.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-	<script th:inline="javascript">
-		function writeReply(){
-			let board_id = [[${board.board_id}]];
-			let content = $("#reply").val();
-			$.ajax({
-			url: "/reply/" + board_id,
-			type: "post",
-			data: {
-				"content" : content
-			},
-			success: function(data) {
-				console.log(data);				
-			},
-			error: function(xhr , status, error) {
-				console.log(xhr);
-				console.log(status);
-				console.log(error);
-			}
-		});
-	</script>
 </head>
 <body>
 <div id="container">
@@ -59,13 +38,6 @@
         <input type="button" th:onclick="|location.href='/board/delete?board_id=${board.board_id}'|" value="삭제하기">
       </th:block>
   </div>
-   <p>
-	<div>
-		<label for="reply">리플쓰기</label>
-		<input type="text" id="reply" name="reply" value="입력한값">
-		<input type="button" value="등록" onclick="writeReply()">
-	</div>
-   </p>
 </div>
 </body>
 </html>
