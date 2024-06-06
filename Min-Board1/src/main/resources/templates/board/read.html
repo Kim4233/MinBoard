@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 읽기</title>
+    <link rel="stylesheet" href="/default.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script th:inline="javascript">
+		function writeReply(){
+			let board_id = [[${board.board_id}]];
+			let content = ${"#reply"}.val();
+			$.ajax({
+				url: "/reply/ + board_id,
+				type: "post",
+				data: {
+					"board_id": board_id,
+					"content" : content
+				},
+				success: function(date) {
+					console.log(data);
+				},
+				error: function(xhr, status, error) {
+					console.log(xhr);
+					console.log(status);
+					console.log(errpr);
+				}
+			});
+			
+		}
+	</script>
+</head>
+<body>
+<div id="container">
+  <h1>[ 게시판 - 글 읽기 ]</h1>
+    <table th:object="${board}">
+      <tr>
+        <th>제목</th>
+        <td th:text="*{title}"></td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td th:text="*{contents}"></td>
+      </tr>
+      <tr>
+        <th>조회수</th>
+        <td th:text="*{hit}"></td>
+      </tr>
+      <tr>
+        <th>작성일</th>
+        <td th:text="${#temporals.format(board.created_time, 'yyyy-MM-dd HH:mm')}"></td>
+      </tr>
+      <tr>
+        <th>작성자</th>
+        <td th:text="*{member_id}"></td>
+      </tr>
+    </table>
+    <p>
+    <div class="center">
+     <input type="button" onclick="location.href='/board/list'" value="목록으로">
+      <th:block th:if="${session.loginMember.member_id == board.member_id}">
+        <input type="button" th:onclick="|location.href='/board/update?board_id=${board.board_id}'|" value="수정하기">
+        <input type="button" th:onclick="|location.href='/board/delete?board_id=${board.board_id}'|" value="삭제하기">
+      </th:block>
+  </div>
+   <p>
+	<div>
+		<label for="reply">글쓰기</label>
+		<input type="text" id="reply" name="reply" value="입력한값">
+		<input type="button" value="등록" onclick="writeReply()">
+	</div>
+</div>
+</body>
+</html>
