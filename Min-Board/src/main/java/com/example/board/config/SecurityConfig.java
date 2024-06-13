@@ -13,37 +13,37 @@ public class SecurityConfig {
 	
 	@Bean
 	public PasswordEncoder encoder() {
-		//비크립트라는 방식으로 패스워드를 암호화하는 객체
+		//非暗号化方式でパスワードを暗号化するオブジェクト
 		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
 	public SecurityFilterChain filterChian(HttpSecurity http) throws Exception {
 		http
-			//Cross-Site-Request-Forgery 보호 기능
+			//Cross-Site-Request-Forgery 保護機能 
 			.csrf().disable() 
-			//iframe으로 접근이 안디도록 하는 설정을 비활성화(iframe 으로 접근 이가능하게 하겠다.)
+			//iframeでアクセシビリティを無効にする設定を無効にする（iframeでアクセシビリティを有効にします。）
 			.headers().frameOptions().disable()
 			.and()
-			//URL별 관한접근 제어
+			//URL別に関するアクセス制御
 			.authorizeRequests()
 			.antMatchers("/","member/join","/member/login","/member/login-failed","/member/logout").permitAll()
 			.antMatchers("/css/*","/js/*", "/favicon.ico","/error").permitAll()		
-			//이외의 모든 경로는 인증을 받아야 접근 가능
+			//他のすべてのパスは認証されなければアクセスできません
 			.anyRequest().authenticated()
 			.and()
-			//폼 로그인방식을 사용하겠다.
+			//フォームログイン方式を使用します。
 			.formLogin()
-			//아이디 필드의 기본값은 username 이고 다른 이름으로 사용할 시 이름을 지정함.
+			//IDフィールドのデフォルト値はusernameで、他の名前として使用するときの名前を指定します。
 			.usernameParameter("member_id")
-			//개발자가 만든 로그인 페이지를 사용하겠다.
-			//설정을 하지 않으면 기본값이 '/login'이기 때문에 스프링이 사용하는 기본 로그인페이지가 호출된다.
+			//開発者が作成したログインページを使用します。
+			  //設定しないと、デフォルト値は '/login'なので、Springが使用するデフォルトのログインページが呼び出されます。
 			.loginPage("/member/login")
-			//로그인 인증처리를 하는 URL
+            //ログイン認証処理を行うURL
 			.loginProcessingUrl("/member/login")
-			//로그인에 성공했을때 이동할 URL
+			//ログインに成功したときに移動するURL
 			.defaultSuccessUrl("/member/login-success")
-			//로그인에 실패했을때 이동할 URL
+			//ログインに失敗したときに移動するURL
 			.failureUrl("/member/login-failed");
 			
 		return http.build();

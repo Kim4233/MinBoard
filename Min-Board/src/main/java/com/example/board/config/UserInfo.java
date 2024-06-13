@@ -22,7 +22,7 @@ public class UserInfo implements UserDetails {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// 사용자의 권한을 리턴
+		//ユーザーの権限を返す
 		Collection<GrantedAuthority> collect = new ArrayList<>();
 
 		collect.add(new SimpleGrantedAuthority(member.getRole().name()));
@@ -32,39 +32,37 @@ public class UserInfo implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		// 패스워드를 리턴
 		return member.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		//아이디를 리턴
 		return member.getMember_id();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// 계정의 기한 완료 여부
-		// false: 아니 완료가 되었다. --> 로그인이 안되고
-		// true: 를 완료가 안됐다. ---> 로그인이 되고
+		// アカウントの期限が完了したかどうか
+		  // false：いいえ完了しました。 -->ログインできません
+		  // true: を完了できませんでした。 --->ログインになります
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		//계정의 잠금 여부 
+		// 金曜の夜に旅行
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// 접속 권한 만료 여부
+		// 最初にメールを送ってください
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// 개정 사용 가능 여부
+		// 教師が旅行に行く
 		return true;
 	}
 

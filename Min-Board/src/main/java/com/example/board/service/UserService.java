@@ -11,10 +11,8 @@ import com.example.board.repository.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-/*
- * 로그인 폼에서 아이디아 패스워드를 입력하고 로그인 요청을 하면 UserDetaisServicedhl
- * loaduserByUserName 메서드를 자동을 호출한다.
- */
+
+
 @Slf4j
 @Service
 @RequiredArgsConstructor

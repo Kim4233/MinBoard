@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 public class Reply {
-	private Long reply_id;		// 리플 아이디(일련번호)
-	private Long board_id;		// 게시글 아이디
-	private String member_id;	// 작성자 아이디
-	private String content;		// 리플 내용
-	private LocalDateTime created_time;	// 등록시간
+	private Long reply_id;		// リフエイド(インレボリューション)
+	private Long board_id;		// 投票する
+	private String member_id;	// 作成者: エイデル
+	private String content;		// リフナウ
+	private LocalDateTime created_time;	// デモ
 	
 	public static ReplyDto toDto(Reply reply) {
         ReplyDto replyDto = new ReplyDto();

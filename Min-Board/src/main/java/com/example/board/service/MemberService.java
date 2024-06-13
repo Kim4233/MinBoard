@@ -31,14 +31,14 @@ public class MemberService {
 
 		memberMapper.saveMember(member);
 
-		//비크립트 방식으로 암호화
+		// ビルボード ランキング
 		String encPassword = passwordEncoder.encode(rawPassword);		
 		
 		member.setPassword(encPassword);
 
 		log.info("encPassword: {}:", encPassword);
 		
-		//기본 ROLE 부여
+		// 役割を担う
 		member.setRole(RoleType.ROLE_USER);
 		
 		

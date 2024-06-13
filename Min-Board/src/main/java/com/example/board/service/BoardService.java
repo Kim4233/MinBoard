@@ -29,7 +29,7 @@ public class BoardService {
     public void saveBoard(Board board, MultipartFile file) {
 
         boardMapper.saveBoard(board);
-        // 파일을 저장한다.
+        // ファンが起動します。
         if (file != null && file.getSize() > 0) {
             AttachedFile attachedFile = fileService.saveFile(file);
             attachedFile.setBoard_id(board.getBoard_id());
@@ -38,7 +38,7 @@ public class BoardService {
     }
 
     public List<Board> findBoards(String searchText, int startRecord, int countPerPage) {
-        // 전체 검색 결과 중 시작 위치와 갯수
+    	// 最初に検索キーワードを入力してから検索する
         RowBounds rowBounds = new RowBounds(startRecord, countPerPage);
         return boardMapper.findBoards(searchText, rowBounds);
     }
@@ -59,15 +59,11 @@ public class BoardService {
         Board board = boardMapper.findBoard(updateBoard.getBoard_id());
         if (board != null) {
             boardMapper.updateBoard(board);
-            // 첨부파일 정보를 가져온다.
             AttachedFile attachedFile = boardMapper.findFileByBoardId(updateBoard.getBoard_id());
             if (attachedFile != null && (isFileRemoved || (file != null && file.getSize() > 0))) {
-                // 파일 삭제를 요청했거나 새로운 파일이 업로드 되면 기존 파일을 삭제한다.
                 removeAttachedFile(attachedFile.getAttachedFile_id());
             }
-            // 새로 저장할 파일이 있으면 저장한다.
             if (file != null && file.getSize() > 0) {
-                // 첨부파일을 서버에 저장한다.
                 AttachedFile savedFile = fileService.saveFile(file);
                 savedFile.setBoard_id(updateBoard.getBoard_id());
                 boardMapper.saveFile(savedFile);
