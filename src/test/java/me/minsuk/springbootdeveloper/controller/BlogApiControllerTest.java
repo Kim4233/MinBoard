@@ -1,6 +1,7 @@
 package me.minsuk.springbootdeveloper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.minsuk.springbootdeveloper.dto.UpdateArticleRequest;
 import me.minsuk.springbootdeveloper.repository.BlogRepository;
 import me.minsuk.springbootdeveloper.domain.Article;
 import me.minsuk.springbootdeveloper.dto.AddArticleRequest;
@@ -123,11 +124,12 @@ class BlogApiControllerTest {
                 .andExpect(jsonPath("$.title").value(title));
     }
 
+
     @DisplayName("deleteArticle: 블로그 글 삭제에 성공한다.")
     @Test
     public void deleteArticle() throws Exception {
-        //given
-        final String url = "api/articles/{id}";
+        // given
+        final String url = "/api/articles/{id}";
         final String title = "title";
         final String content = "content";
 
@@ -136,21 +138,15 @@ class BlogApiControllerTest {
                 .content(content)
                 .build());
 
-        //when
+        // when
         mockMvc.perform(delete(url, savedArticle.getId()))
                 .andExpect(status().isOk());
 
-        //then
+        // then
         List<Article> articles = blogRepository.findAll();
 
         assertThat(articles).isEmpty();
     }
-}
-
-
-    // when 저장한 블로그 글의 id값으로 삭제 API를 호출합니다.
-    mockMvc.perform(delete)
-
 
 
     @DisplayName("updateArticle: 블로그 글 수정에 성공한다.")

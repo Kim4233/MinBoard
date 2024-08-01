@@ -24,27 +24,22 @@ public class BlogService {
         return blogRepository.findAll();
     }
 
-    //블로그글 조회
-    public Article findById(Long id) {
+    public Article findById(long id) {
         return blogRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
 
-    // 블로그글 삭제
-    public void delete(Long id) {
+    public void delete(long id) {
         blogRepository.deleteById(id);
     }
-
 
     @Transactional
     public Article update(long id, UpdateArticleRequest request) {
         Article article = blogRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("no found: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
 
         article.update(request.getTitle(), request.getContent());
 
         return article;
-        }
     }
-
 }
